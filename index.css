@@ -1,0 +1,145 @@
+@font-face {
+  font-family: 'Charter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./charter-regular.woff2') format('woff2');
+}
+
+
+@font-face {
+  font-family: 'Charter';
+  font-style: normal;
+  font-weight: 700;
+  src: url('./charter-bold.woff2') format('woff2');
+}
+
+
+@font-face {
+  font-family: 'fbb';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fbb-regular.woff2') format('woff2');
+}
+
+
+@font-face {
+  font-family: 'Concourse Index';
+  /* font-style: normal; */
+  /* font-weight: 400; */
+  src: url('./concourse-index.woff2') format('woff2');
+}
+
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  align-items: center;
+  display: flex;
+  font-family: "IBM Plex Serif", sans-serif;
+  font-family: "Charter", sans-serif;
+  /* font-variant: small-caps; */
+  font-weight: 400;
+  height: 100%;
+  margin: 0;
+  padding: 1em;
+  /* justify-content: center; */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  /* align-items: end; */
+  /* width: 50%; */
+  margin: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 6em 6em 44em;
+  /* gap: 2em 0; */
+  /* align-content: end; */
+  justify-items: center;
+  align-items: center;
+}
+
+.row {
+  align-items: center;
+  display: flex;
+  gap: 4em;
+  justify-content: space-between;
+}
+
+.row-icon {
+  font-size: 3em;
+  height: 1.375em;
+  cursor: pointer;
+  /* outline: solid black 1px; */
+}
+
+.row-number {
+  /* font-size: 4em;
+  font-family: "Concourse Index", serif;
+  font-feature-settings: "ss00"; */
+
+  border: solid black 0.08em;
+  border-radius: 50%;
+  font-size: 2.75em;
+  width: 1.375em;
+  height: 1.375em;
+  padding-bottom: 0.08em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-input {
+  cursor: pointer;
+  justify-self: end;
+}
+
+.time-number {
+  font-size: 8em;
+}
+
+.time-unit {
+  font-size: 3.5em;
+  margin-right: 0.5em;
+}
+
+/* 1000px / 62.5 = 16px */
+@media screen and (max-width: 1000px) {
+  body {
+    font-size: calc(100vw / 62.5);
+  }
+}
+
+/* 250px / 62.5 = 4px */
+@media screen and (max-width: 250px) {
+  body {
+    /* font-size: 4px; */
+  }
+
+  /* .grid {
+    padding: 1em;
+    grid-template-columns: 6em 6em 30em;
+    justify-items: start;
+  }
+
+  .time-number {
+    justify-self: start;
+  }
+
+  .time-input {
+    grid-column: span 3;
+    justify-self: end;
+    margin-bottom: 4em;
+  } */
+}
