@@ -1,55 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>timer</title>
-    <meta content="Timer." name="description" />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="index.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
-  </head>
-  <body>
-    <div id="app">
-      <!-- <header>
-        <h1>Timer</h1>
-      </header> -->
-      <main id="main">
-        <div class="grid">
-          <div class="row-icon">▶</div>
-          <div class="row-icon reset">↺</div>
-          <!-- <div class="row-number">1</div> -->
-          <div id="time-input-1" class="time-input">
-            <span class="time-number number-h">3</span>
-            <span class="time-unit unit-h">h</span>
-            <span class="time-number number-m">3</span>
-            <span class="time-unit unit-m">m</span>
-            <span class="time-number number-s">31</span>
-            <span class="time-unit unit-s">s</span>
-          </div>
-          <div class="row-icon">▶</div>
-          <div class="row-icon reset">↺</div>
-          <!-- <div class="row-number">2</div> -->
-          <div id="time-input-2" class="time-input">
-            <span class="time-number number-h">0</span>
-            <span class="time-unit unit-h">h</span>
-            <span class="time-number number-m">3</span>
-            <span class="time-unit unit-m">m</span>
-            <span class="time-number number-s">31</span>
-            <span class="time-unit unit-s">s</span>
-          </div>
+    <head>
+        <title>timer</title>
+        <meta content="timer" name="description" />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap"
+            rel="stylesheet"
+        /> -->
+        <link rel="stylesheet" href="index.css" />
+        <!-- no icon -->
+        <link rel="icon" href="data:," />
+        <!-- <link rel="icon" type="image/png" href="favicon.png" /> -->
+    </head>
+    <body>
+        <div id="app">
+            <main id="main">
+                <div id="grid" class="grid">
+                    <div id="add" class="row-icon">＋</div>
+                </div>
+            </main>
         </div>
-        <div>
-          <!-- <button>Next</button>
-          <button id="button-toggle">Pause</button>
-          <button id="button-reset">Reset</button> -->
-        </div>
-      </main>
-    </div>
-    <script src="main.js"></script>
-  </body>
+        <script src="main.js"></script>
+    </body>
 </html>
