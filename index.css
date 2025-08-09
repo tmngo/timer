@@ -42,10 +42,9 @@ html {
 body {
   align-items: start;
   display: flex;
-  /* font-family: "IBM Plex Serif", sans-serif; */
+  /* font-family: "IBM Plex Sans", sans-serif; */
   /* font-family: "fbb", sans-serif; */
-  font-family: "Charter", sans-serif;
-  font-variant: small-caps;
+  font-family: "Charter", serif;
   font-weight: 400;
   height: 100%;
   margin: 0;
@@ -66,11 +65,12 @@ body {
   display: grid;
   grid-template-columns: 6em 6em minmax(34em, 44em) minmax(24em, 30em) 6em 6em;
   justify-items: center;
+  /* grid-auto-rows: max-content; */
   align-items: center;
 }
 
 .reset {
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .row {
@@ -81,9 +81,26 @@ body {
 }
 
 .row-icon {
-  font-size: 3em;
-  height: 1.375em;
+  font-size: 1.5em;
+  line-height: 1em;
+  padding: 0.4em;
+  box-shadow: 0em 0.125em 0px;
+  display: flex;
+  align-items: center;
+  border: solid 1px;
+  display: flex;
+  justify-content: center;
+  /* height: 1.375em; */
+  min-width: 3em;
   cursor: pointer;
+  border-radius: 0.25em;
+  font-variant: normal;
+}
+
+.row-icon:hover {
+  transform: translate(0.125em, 0.125em);
+  box-shadow: 0px 0px 0px;
+  transition: .1s;
 }
 
 .row-number {
@@ -126,6 +143,13 @@ body {
 
 .clear {
   color: #bbb;
+  border-color: #bbb;
+}
+
+.clear-container,
+.reset-container {
+  display: flex;
+  align-items: center;
 }
 
 .input {
@@ -143,12 +167,19 @@ body {
 }
 
 #add {
-  font-size: 6em;
+  height: 7.36em;
+  display: flex;
 }
+
+#add>div {
+  margin: auto;
+}
+
 
 .time-unit {
   font-size: 3.5em;
   margin-right: 0.5em;
+  font-variant: small-caps;
 }
 
 /* 1000px / 62.5 = 16px */

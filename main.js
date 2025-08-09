@@ -2,10 +2,12 @@ const secondsSpan = document.getElementsByClassName("number-s")[0];
 const toggleButton = document.getElementById("button-toggle");
 const resetButton = document.getElementById("button-reset");
 
-const playUnicode = "▶";
-const pauseUnicode = "⏸";
-const resetUnicode = "⟲"; // ⟲ ↺
-const stopUnicode = "⏹";
+const startSymbol = "start";
+const pauseSymbol = "pause";
+const resetSymbol = "reset";
+const stopSymbol = "stop";
+const clearSymbol = "clear";
+const deleteSymbol = "delete";
 
 const SECONDS_PER_MINUTE = 60;
 const MINUTES_PER_HOUR = 60;
@@ -107,7 +109,7 @@ const addTimer = (
     template.innerHTML = `
     <div class="row-icon play">▶</div>
     <div class="reset-container">
-        <div class="row-icon reset">${resetUnicode}</div>
+        <div class="row-icon reset">${resetSymbol}</div>
     </div>
     <!-- <div class="row-number">1</div> -->
     <div class="time-input">
@@ -128,9 +130,9 @@ const addTimer = (
         <span class="time-unit unit-s">s</span>
     </div>
     <div class="clear-container">
-        <div class="row-icon clear">${resetUnicode}</div>
+        <div class="row-icon clear">${clearSymbol}</div>
     </div>
-    <div class="row-icon delete">✖</div>
+    <div class="row-icon delete">${deleteSymbol}</div>
     <div class="spacer"/>
   `;
     const playButton = template.content.querySelector(".play");
@@ -184,8 +186,7 @@ const addTimer = (
             // round
             total = Math.floor(total / 1000) * 1000;
 
-            playButton.innerHTML = playUnicode;
-            playButton.style["padding-bottom"] = "0em";
+            playButton.innerHTML = startSymbol;
             playButton.style.color = "inherit";
             timeInput.style.color = "inherit";
             resetButton.style.display =
@@ -199,9 +200,10 @@ const addTimer = (
             timer = setInterval(obj.step, 125);
             isPaused = false;
 
-            playButton.innerHTML = pauseUnicode;
-            playButton.style["padding-bottom"] = "1.5em";
-            resetButton.style.display = "block";
+            if (msLeft > 0) {
+                playButton.innerHTML = pauseSymbol;
+                resetButton.style.display = "block";
+            }
             clearButton.style.display = "block";
         },
         pause: () => {
@@ -214,8 +216,7 @@ const addTimer = (
             const correction = (durationSeconds * 1000 - msLeft) % 1000;
             total = Math.floor(total / 1000) * 1000 + correction;
 
-            playButton.innerHTML = playUnicode;
-            playButton.style["padding-bottom"] = "0em";
+            playButton.innerHTML = startSymbol;
         },
         step: () => {
             // time since resume
@@ -233,8 +234,6 @@ const addTimer = (
                 stElement,
                 total - 999
             );
-
-            playButton.setAttribute("title", total);
 
             // on timer timeout
             if (now < 0) {
@@ -268,11 +267,9 @@ const addTimer = (
                 }
                 isCompleted = true;
                 //   icon.innerHTML = playUnicode;
-                //   icon.style["padding-bottom"] = "0em";
                 //   // obj.resume = function () {};
                 //   // if (onComplete) onComplete();
-                playButton.innerHTML = stopUnicode;
-                //   icon.style["padding-bottom"] = "1.5em";
+                playButton.innerHTML = stopSymbol;
             }
             return now;
         },
