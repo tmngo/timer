@@ -152,6 +152,8 @@ const addTimer = (
     const mtUnit = template.content.querySelector(".time-total .unit-m");
     const stElement = template.content.querySelector(".number-s2");
 
+    clearButton.style.display = savedTotal > 0 ? "block" : "none";
+
     let durationSeconds = seconds;
 
     let startTime, timer;
@@ -204,9 +206,11 @@ const addTimer = (
             clearInterval(timer);
             isPaused = true;
 
-            total = Math.floor(total / 1000) * 1000;
             const delta = new Date().getTime() - startTime;
             msLeft -= delta;
+
+            const correction = (durationSeconds * 1000 - msLeft) % 1000;
+            total = Math.floor(total / 1000) * 1000 + correction;
 
             playButton.innerHTML = playUnicode;
             playButton.style["padding-bottom"] = "0em";
@@ -407,7 +411,12 @@ const addTimer = (
 
     clearButton.onclick = () => {
         total = 0;
-        previousTotal = startTime - new Date().getTime();
+
+        const correction = (durationSeconds * 1000 - msLeft) % 1000;
+        previousTotal =
+            Math.ceil((startTime - new Date().getTime()) / 1000) * 1000 +
+            correction;
+
         renderTime(
             htElement,
             htUnit,
