@@ -107,6 +107,17 @@ body {
   justify-self: end;
 }
 
+.time-input input {
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  position: absolute;
+}
+
 .time-total {
   /* font-size: 0.625em; */
   color: #ccc;

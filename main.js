@@ -110,13 +110,14 @@ const addTimer = (
         <div class="row-icon reset">${resetUnicode}</div>
     </div>
     <!-- <div class="row-number">1</div> -->
-    <div class="time-input" tabindex="${id}">
+    <div class="time-input">
         <span class="time-number number-h">${h}</span>
         <span class="time-unit unit-h">h</span>
         <span class="time-number number-m">${m}</span>
         <span class="time-unit unit-m">m</span>
         <span class="time-number number-s">${s}</span>
         <span class="time-unit unit-s">s</span>
+        <input tabindex="0"/>
     </div>
     <div class="time-total">
         <span class="time-number number-h2">${h0}</span>
@@ -138,6 +139,7 @@ const addTimer = (
     const deleteButton = template.content.querySelector(".delete");
 
     const timeInput = template.content.querySelector(".time-input");
+    const hiddenInput = template.content.querySelector(".time-input input");
     const maxLength = 6;
 
     const hElement = template.content.querySelector(".number-h");
@@ -290,10 +292,13 @@ const addTimer = (
 
     let timeInputValue = "";
     let isChanged = false;
-    timeInput.onfocus = () => {
+    timeInput.onclick = () => {
+        hiddenInput.focus();
+    };
+    hiddenInput.onfocus = () => {
         if (isCompleted) {
             obj.reset();
-        } else {
+        } else if (!isPaused) {
             obj.pause();
         }
         timeInput.style.borderBottom = "solid 1px black";
@@ -312,8 +317,9 @@ const addTimer = (
         }
     };
 
-    timeInput.onblur = () => {
+    hiddenInput.onblur = () => {
         timeInput.style.border = "none";
+        timeInput.style.marginBottom = "0px";
         if (isChanged) {
             isChanged = false;
             const sInput = timeInputValue.substring(
@@ -341,9 +347,9 @@ const addTimer = (
         }
     };
 
-    timeInput.onkeydown = (e) => {
+    hiddenInput.onkeydown = (e) => {
         if (e.key === "Enter") {
-            timeInput.blur();
+            hiddenInput.blur();
         }
         if (e.key === "Backspace") {
             if (timeInputValue.length > 0) {
@@ -413,9 +419,11 @@ const addTimer = (
         total = 0;
 
         const correction = (durationSeconds * 1000 - msLeft) % 1000;
-        previousTotal =
-            Math.ceil((startTime - new Date().getTime()) / 1000) * 1000 +
-            correction;
+        if (startTime) {
+            previousTotal =
+                Math.ceil((startTime - new Date().getTime()) / 1000) * 1000 +
+                correction;
+        }
 
         renderTime(
             htElement,
