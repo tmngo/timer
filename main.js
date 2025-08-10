@@ -164,6 +164,7 @@ const addTimer = (
     let msLeft = 0;
     let total = savedTotal;
     let previousTotal = 0;
+    let previousMsLeft = 0;
     let isPaused = false;
     let isCompleted = false;
 
@@ -182,6 +183,7 @@ const addTimer = (
             msLeft = msInitial ?? durationSeconds * 1000;
 
             renderTime(hElement, hUnit, mElement, mUnit, sElement, msLeft);
+            previousMsLeft = msLeft;
 
             // round
             total = Math.floor(total / 1000) * 1000;
@@ -195,6 +197,7 @@ const addTimer = (
         resume: () => {
             startTime = new Date().getTime();
             previousTotal = total;
+            previousMsLeft = msLeft;
             // adjust this number to affect granularity
             // lower numbers are more accurate, but more CPU-expensive
             timer = setInterval(obj.step, 125);
@@ -210,8 +213,8 @@ const addTimer = (
             clearInterval(timer);
             isPaused = true;
 
-            const delta = new Date().getTime() - startTime;
-            msLeft -= delta;
+            // const delta = new Date().getTime() - startTime;
+            // msLeft -= delta;
 
             const correction = (durationSeconds * 1000 - msLeft) % 1000;
             total = Math.floor(total / 1000) * 1000 + correction;
@@ -222,10 +225,13 @@ const addTimer = (
             // time since resume
             const delta = new Date().getTime() - startTime;
 
+            // current total = time since resume + total at resume
             total = delta + previousTotal;
-            const now = msLeft - delta;
 
-            renderTime(hElement, hUnit, mElement, mUnit, sElement, now);
+            // current msLeft = msLeft at resume - time since resume
+            msLeft = previousMsLeft - delta;
+
+            renderTime(hElement, hUnit, mElement, mUnit, sElement, msLeft);
             renderTime(
                 htElement,
                 htUnit,
@@ -236,11 +242,8 @@ const addTimer = (
             );
 
             // on timer timeout
-            if (now < 0) {
-                //   clearInterval(timer);
-                //   isPaused = true;
+            if (msLeft < 0) {
                 if (!isCompleted) {
-                    // timeInput.style.backgroundColor = "#000";
                     timeInput.style.color = "#a03";
                     playButton.style.color = "#a03";
                     resetButton.style.display = "none";
@@ -271,7 +274,6 @@ const addTimer = (
                 //   // if (onComplete) onComplete();
                 playButton.innerHTML = stopSymbol;
             }
-            return now;
         },
     };
 
@@ -472,7 +474,14 @@ addButton.onclick = () => {
 addEventListener("beforeunload", () => {
     localStorage.setItem(
         "savedTimers",
-        JSON.stringify(timers.map((t) => [t.duration(), t.msLeft(), t.total()]))
+        JSON.stringify(
+            timers.map((t) => {
+                if (t.isCompleted()) {
+                    return [t.duration(), t.duration() * 1000, t.total()];
+                }
+                return [t.duration(), t.msLeft(), t.total()];
+            })
+        )
     );
     // event.preventDefault();
 });
